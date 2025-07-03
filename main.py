@@ -14,7 +14,7 @@ def canonical_smiles(df, smiles_column):
     df['canonical_smiles'] = df[smiles_column].apply(lambda x: Chem.MolToSmiles(Chem.MolFromSmiles(x)))
     return df
 
-def compute_fps(df, fingerprint="MACCS", path="fingerprints"):
+def compute_fps(df, fingerprint="MACCS", path="descriptor_xml"):
     # Only use the specified fingerprint
     xml_file = os.path.join(path, f"{fingerprint}.xml")
     if not os.path.exists(xml_file):
@@ -70,38 +70,31 @@ def predict_with_model(model, scaler, data):
 def main(fingerprint="MACCS", data_dir="Hepa", excel_file="xanthine.xlsx", name="hepa"):                                                         
 
     # load the smiles and class of excel_file
-    df = pd.read_excel(excel_file, index_col=0)
+    df = pd.read_csv(excel_file)
     df = cp.canonical_smiles(df, "SMILES")
     df = cp.remove_inorganic(df, "canonical_smiles")
     df = cp.remove_mixtures(df, "canonical_smiles")
-    model_path = os.path.join("models", f"{fingerprint.lower()}_model_{name}.joblib")
-    x_train = pd.read_csv(os.path.join(data_dir, "train", f"{fingerprint.lower()}_{name}.csv"), index_col=0)
+    #model_path = os.path.join("models", f"{fingerprint.lower()}_model_{name}.joblib")
+    #x_train = pd.read_csv(os.path.join(data_dir, "train", f"{fingerprint.lower()}_{name}.csv"), index_col=0)
     df_clean = df.copy()
-    x_test = compute_fps(df_clean, fingerprint=fingerprint, path="fingerprints")
+    x_test = compute_fps(df, fingerprint=fingerprint, path="descriptor_xml")
     print("X-test features", x_test.shape)
     # load x_train for fingerprint matching
-    x_train = pd.read_csv(os.path.join(data_dir, "train", f"{fingerprint}_{name}.csv"), index_col=0)
-    x_train = remove_constant_string_des(x_train)
-    x_train = remove_highly_correlated_features(x_train, threshold=0.7)
-    print("X-train features", x_train.shape)
-    x_test = x_test.loc[:, x_train.columns]
-    print("X-test features after matching with x_train", x_test.shape)
-    # Load model and scaler
-    model, scaler = load_model_and_scaler(model_path)
-    # predict
-    predictions = predict_with_model(model, scaler, x_test)
-    # get csv file with predictions
-    df_clean["Predicted_Class"] = predictions
-    df_clean.to_csv(os.path.join("predictions", f"predictions_{os.path.splitext(os.path.basename(excel_file))[0]}.csv"))
+    #x_train = pd.read_csv(os.path.join(data_dir, "train", f"{fingerprint}_{name}.csv"), index_col=0)
+    #x_train = remove_constant_string_des(x_train)
+    #x_train = remove_highly_correlated_features(x_train, threshold=0.7)
+    #print("X-train features", x_train.shape)
+    ##x_test = x_test.loc[:, x_train.columns]
+    #print("X-test features after matching with x_train", x_test.shape)
+    ## Load model and scaler
+    #model, scaler = load_model_and_scaler(model_path)
+    ## predict
+    #predictions = predict_with_model(model, scaler, x_test)
+    ## get csv file with predictions
+    #df_clean["Predicted_Class"] = predictions
+    #df_clean.to_csv(os.path.join("predictions", f"predictions_{os.path.splitext(os.path.basename(excel_file))[0]}.csv"))
     return df_clean
 if __name__ == "__main__":
     # Example usage: main(fingerprint="MACCS", data_dir="Hepa", excel_file="xanthine.xlsx")
-    main(fingerprint="pubchem", data_dir="hepa", excel_file="D_KB.xlsx")
-    main(fingerprint="krfpc",   data_dir="neu", excel_file="D_KB.xlsx")
-    main(fingerprint="ap2dc",  data_dir="pbmc", excel_file="D_KB.xlsx")
-    main(fingerprint="krfp",   data_dir="renal", excel_file="D_KB.xlsx")
-    main(fingerprint="subfp", data_dir="res", excel_file="D_KB.xlsx")
-    main(fingerprint="subfp", data_dir="scar", excel_file="D_KB.xlsx")
-    main(fingerprint="supfpc", data_dir="car", excel_file="D_KB.xlsx")
-    main(fingerprint="pubchem", data_dir="skin", excel_file="D_KB.xlsx")
+    main(fingerprint="PubChem", data_dir="hepa", excel_file="training_data/x_train_Hepa.csv")
 
