@@ -57,11 +57,11 @@ def predict_from_smiles(smiles_list):
         raise ValueError("❌ No valid organic SMILES after preprocessing.")
     
     # Tính descriptor
-    desc_df = compute_fps(df, fingerprint="PubChem")
+    desc_df = compute_fps(df, fingerprint="KRFPC")
     X = desc_df.select_dtypes(include=["number"])
 
     # Load model
-    model_path = "models/rf_pubchem_hepa.joblib"
+    model_path = "models/rf_krfpc_neu.joblib"
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"❌ Model not found at: {model_path}")
     

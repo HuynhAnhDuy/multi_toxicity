@@ -84,5 +84,5 @@ pipeline.fit(X, y)
 
 # ===== SAVE MODEL =====
 os.makedirs("models", exist_ok=True)
-joblib.dump(pipeline, "models/rf_pubchem_hepa.joblib")
-print("✅ Model saved to: models/rf_pubchem_hepa.joblib")
+joblib.dump(pipeline, "models/rf_krfpc_neu.joblib")
+print("✅ Model saved to: models/rf_krfpc_neu.joblib")
