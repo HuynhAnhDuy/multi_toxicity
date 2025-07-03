@@ -91,13 +91,13 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     image1 = Image.open("assets/job.jpg")
-    st.image(image1, caption="Huynh Anh Duy", width=160)
+    st.image(image1, caption="Sastiya Kampaengsri", width=160)
     st.markdown("""
-    **Huynh Anh Duy**  
-    Can Tho University, Vietnam  
-    PhD Candidate, Khon Kaen University, Thailand  
-    *Cheminformatics, QSAR Modeling, Computational Drug Discovery and Toxicity Prediction*  
-    📧 [huynhanhduy.h@kkumail.com](mailto:huynhanhduy.h@kkumail.com), [haduy@ctu.edu.vn](mailto:haduy@ctu.edu.vn)
+    **Dr. Sastiya Kampaengsri**  
+    Faculty of Pharmaceutical Sciences  
+    Khon Kaen University, Thailand  
+    *Cheminformatics, QSAR Modeling, Computational Drug Discovery and Toxicity Prediction, Drug encapsulation for cancer therapy*  
+    📧 [sastiya.ks@gmail.com](mailto:sastiya.ks@gmail.com)
     """)
 
 with col2:
