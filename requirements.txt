@@ -1,5 +1,7 @@
 streamlit
 pandas
 scikit-learn
-rdkit
-joblib
+xgboost
+padelpy
+rdkit-pypi
+numpy
