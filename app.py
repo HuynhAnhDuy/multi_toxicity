@@ -4,12 +4,12 @@ GA_TRACKING_ID = "G-Y27P57QD3C"  #
 
 GA_JS = f"""
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={GA_TRACKING_ID}"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y27P57QD3C"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
-  gtag('config', '{GA_TRACKING_ID}');
+  gtag('config', 'G-Y27P57QD3C');
 </script>
 """
 
