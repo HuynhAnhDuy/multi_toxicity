@@ -1,4 +1,20 @@
 import streamlit as st
+# Replace this with your actual GA4 ID
+GA_TRACKING_ID = "G-Y27P57QD3C"  #
+
+GA_JS = f"""
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={GA_TRACKING_ID}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+  gtag('config', '{GA_TRACKING_ID}');
+</script>
+"""
+
+st.markdown(GA_JS, unsafe_allow_html=True)
+
 import pandas as pd
 from PIL import Image
 import sys
