@@ -4,5 +4,5 @@ scikit-learn
 xgboost
 padelpy
 rdkit-pypi
+joblib
 numpy
-
