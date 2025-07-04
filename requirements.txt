@@ -5,6 +5,4 @@ xgboost
 padelpy
 rdkit-pypi
 numpy
-sudo apt update
-sudo apt install default-jre
 
