@@ -14,6 +14,7 @@ GA_JS = f"""
 """
 
 st.markdown(GA_JS, unsafe_allow_html=True)
+st.markdown("✅ GA script injected!")
 
 import pandas as pd
 from PIL import Image
