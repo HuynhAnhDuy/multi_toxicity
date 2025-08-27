@@ -18,7 +18,7 @@ from custom_preprocessing import (
 )
 
 # ===== FUNCTION TO CALCULATE DESCRIPTORS USING padelpy =====
-def compute_fps(df, fingerprint="KRFPC", path="descriptor_xml"):
+def compute_fps(df, fingerprint="MACCS", path="descriptor_xml"):
     # Only use the specified fingerprint
     xml_file = os.path.join(path, f"{fingerprint}.xml")
     if not os.path.exists(xml_file):
@@ -64,7 +64,7 @@ print(f"✅ Cleaned data: {df.shape[0]} samples")
 
 # ===== DESCRIPTOR CALCULATION =====
 print("🧮 Calculating descriptors with PaDEL...")
-desc_df = compute_fps(df, "KRFPC")
+desc_df = compute_fps(df, "MACCS")
 X = desc_df.select_dtypes(include=["number"])
 y = df["Label"].tolist()
 print(f"✅ Descriptors calculated for {X.shape[0]} samples, {X.shape[1]} features")
@@ -84,5 +84,5 @@ pipeline.fit(X, y)
 
 # ===== SAVE MODEL =====
 os.makedirs("models", exist_ok=True)
-joblib.dump(pipeline, "models/rf_krfpc_neu.joblib")
-print("✅ Model saved to: models/rf_krfpc_neu.joblib")
+joblib.dump(pipeline, "models/rf_maccs_neu.joblib")
+print("✅ Model saved to: models/rf_maccs_neu.joblib")

@@ -74,7 +74,7 @@ if X.shape[1] == 0:
     raise ValueError("❌ No numeric features found. Check XML file or descriptor output.")
 
 # ===== MODEL TRAINING =====
-print("🧠 Training Random Forest with StandardScaler...")
+print("🧠 Training XGBoost with StandardScaler...")
 pipeline = Pipeline([
     ("imputer", SimpleImputer(strategy="mean")),
     ("scaler", StandardScaler()),

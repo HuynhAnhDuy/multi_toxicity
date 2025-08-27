@@ -61,7 +61,7 @@ def predict_from_smiles(smiles_list):
     X = desc_df.select_dtypes(include=["number"])
 
     # Load model
-    model_path = "models/rf_subfp_scar.joblib"
+    model_path = "models/xgb_subfp_renal.joblib"
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"❌ Model not found at: {model_path}")
     

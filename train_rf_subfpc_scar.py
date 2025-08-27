@@ -2,7 +2,7 @@ import pandas as pd
 import joblib
 import os
 import uuid
-import xgboost as xgb
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -18,7 +18,7 @@ from custom_preprocessing import (
 )
 
 # ===== FUNCTION TO CALCULATE DESCRIPTORS USING padelpy =====
-def compute_fps(df, fingerprint="KRFP", path="descriptor_xml"):
+def compute_fps(df, fingerprint="SubFPC", path="descriptor_xml"):
     # Only use the specified fingerprint
     xml_file = os.path.join(path, f"{fingerprint}.xml")
     if not os.path.exists(xml_file):
@@ -55,7 +55,7 @@ def compute_fps(df, fingerprint="KRFP", path="descriptor_xml"):
 
 # ===== LOAD & CLEAN TRAINING DATA =====
 print("📥 Loading data...")
-df = pd.read_csv("training_data/x_train_Renal.csv")  # Must contain 'SMILES' and 'Label' columns
+df = pd.read_csv("training_data/x_train_Scar.csv")  # Must contain 'SMILES' and 'Label' columns
 
 df = canonical_smiles(df, "SMILES")
 df = remove_inorganic(df, "canonical_smiles")
@@ -64,7 +64,7 @@ print(f"✅ Cleaned data: {df.shape[0]} samples")
 
 # ===== DESCRIPTOR CALCULATION =====
 print("🧮 Calculating descriptors with PaDEL...")
-desc_df = compute_fps(df, "KRFP")
+desc_df = compute_fps(df, "SubFPC")
 X = desc_df.select_dtypes(include=["number"])
 y = df["Label"].tolist()
 print(f"✅ Descriptors calculated for {X.shape[0]} samples, {X.shape[1]} features")
@@ -78,11 +78,11 @@ print("🧠 Training Random Forest with StandardScaler...")
 pipeline = Pipeline([
     ("imputer", SimpleImputer(strategy="mean")),
     ("scaler", StandardScaler()),
-    ("xgb", xgb.XGBClassifier(max_depth=3))
+    ("rf", RandomForestClassifier(max_depth=3, max_features=10))
 ])
 pipeline.fit(X, y)
 
 # ===== SAVE MODEL =====
 os.makedirs("models", exist_ok=True)
-joblib.dump(pipeline, "models/xgb_krfp_renal.joblib")
-print("✅ Model saved to: models/xgb_krfp_renal.joblib")
+joblib.dump(pipeline, "models/rf_subfpc_scar.joblib")
+print("✅ Model saved to: models/rf_subfpc_scar.joblib")

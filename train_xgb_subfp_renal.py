@@ -2,7 +2,7 @@ import pandas as pd
 import joblib
 import os
 import uuid
-from sklearn.ensemble import RandomForestClassifier
+import xgboost as xgb
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -55,7 +55,7 @@ def compute_fps(df, fingerprint="SubFP", path="descriptor_xml"):
 
 # ===== LOAD & CLEAN TRAINING DATA =====
 print("📥 Loading data...")
-df = pd.read_csv("training_data/x_train_Res.csv")  # Must contain 'SMILES' and 'Label' columns
+df = pd.read_csv("training_data/x_train_Renal.csv")  # Must contain 'SMILES' and 'Label' columns
 
 df = canonical_smiles(df, "SMILES")
 df = remove_inorganic(df, "canonical_smiles")
@@ -74,15 +74,15 @@ if X.shape[1] == 0:
     raise ValueError("❌ No numeric features found. Check XML file or descriptor output.")
 
 # ===== MODEL TRAINING =====
-print("🧠 Training Random Forest with StandardScaler...")
+print("🧠 Training XGBoost with StandardScaler...")
 pipeline = Pipeline([
     ("imputer", SimpleImputer(strategy="mean")),
     ("scaler", StandardScaler()),
-    ("rf", RandomForestClassifier(max_depth=3, max_features=10))
+    ("xgb", xgb.XGBClassifier(max_depth=3))
 ])
 pipeline.fit(X, y)
 
 # ===== SAVE MODEL =====
 os.makedirs("models", exist_ok=True)
-joblib.dump(pipeline, "models/rf_subfp_res.joblib")
-print("✅ Model saved to: models/rf_subfp_res.joblib")
+joblib.dump(pipeline, "models/xgb_subfp_renal.joblib")
+print("✅ Model saved to: models/xgb_subfp_renal.joblib")

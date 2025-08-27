@@ -21,12 +21,12 @@ from PIL import Image
 import sys
 # === Import prediction functions ===
 from predict_rf_pubchem_hepa import predict_from_smiles as predict_hepa
-from predict_rf_krfpc_neu import predict_from_smiles as predict_neuro
-from predict_rf_subfp_res import predict_from_smiles as predict_respo
-from predict_rf_subfp_scar import predict_from_smiles as predict_scar
+from predict_rf_maccs_neu import predict_from_smiles as predict_neuro
+from predict_rf_ap2d_res import predict_from_smiles as predict_respo
+from predict_rf_subfpc_scar import predict_from_smiles as predict_scar
 from predict_rf_pubchem_skin import predict_from_smiles as predict_skin
 from predict_xgb_ap2dc_pbmc import predict_from_smiles as predict_pbmc
-from predict_xgb_krfp_renal import predict_from_smiles as predict_renal
+from predict_xgb_subfp_renal import predict_from_smiles as predict_renal
 from predict_xgb_subfpc_car import predict_from_smiles as predict_cardio
 
 # === Define endpoints ===

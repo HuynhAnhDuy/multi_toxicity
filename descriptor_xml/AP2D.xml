@@ -79,8 +79,8 @@
         <Descriptor name="SubstructureFingerprinter" value="false"/>
         <Descriptor name="SubstructureFingerprintCount" value="false"/>
         <Descriptor name="KlekotaRothFingerprinter" value="false"/>
-        <Descriptor name="KlekotaRothFingerprintCount" value="true"/>
-        <Descriptor name="AtomPairs2DFingerprinter" value="false"/>
+        <Descriptor name="KlekotaRothFingerprintCount" value="false"/>
+        <Descriptor name="AtomPairs2DFingerprinter" value="true"/>
         <Descriptor name="AtomPairs2DFingerprintCount" value="false"/>
     </Group>
 </Root>

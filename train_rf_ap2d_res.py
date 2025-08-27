@@ -18,7 +18,7 @@ from custom_preprocessing import (
 )
 
 # ===== FUNCTION TO CALCULATE DESCRIPTORS USING padelpy =====
-def compute_fps(df, fingerprint="SubFP", path="descriptor_xml"):
+def compute_fps(df, fingerprint="AP2D", path="descriptor_xml"):
     # Only use the specified fingerprint
     xml_file = os.path.join(path, f"{fingerprint}.xml")
     if not os.path.exists(xml_file):
@@ -55,7 +55,7 @@ def compute_fps(df, fingerprint="SubFP", path="descriptor_xml"):
 
 # ===== LOAD & CLEAN TRAINING DATA =====
 print("📥 Loading data...")
-df = pd.read_csv("training_data/x_train_Scar.csv")  # Must contain 'SMILES' and 'Label' columns
+df = pd.read_csv("training_data/x_train_Res.csv")  # Must contain 'SMILES' and 'Label' columns
 
 df = canonical_smiles(df, "SMILES")
 df = remove_inorganic(df, "canonical_smiles")
@@ -64,7 +64,7 @@ print(f"✅ Cleaned data: {df.shape[0]} samples")
 
 # ===== DESCRIPTOR CALCULATION =====
 print("🧮 Calculating descriptors with PaDEL...")
-desc_df = compute_fps(df, "SubFP")
+desc_df = compute_fps(df, "AP2D")
 X = desc_df.select_dtypes(include=["number"])
 y = df["Label"].tolist()
 print(f"✅ Descriptors calculated for {X.shape[0]} samples, {X.shape[1]} features")
@@ -84,5 +84,5 @@ pipeline.fit(X, y)
 
 # ===== SAVE MODEL =====
 os.makedirs("models", exist_ok=True)
-joblib.dump(pipeline, "models/rf_subfp_scar.joblib")
-print("✅ Model saved to: models/rf_subfp_scar.joblib")
+joblib.dump(pipeline, "models/rf_ap2d_res.joblib")
+print("✅ Model saved to: models/rf_ap2d_res.joblib")

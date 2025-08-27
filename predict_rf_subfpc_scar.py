@@ -11,7 +11,7 @@ from custom_preprocessing import (
 )
 
 # ==== Hàm tính fingerprint (PubChem) ====
-def compute_fps(df, fingerprint="KRFPC", path="descriptor_xml"):
+def compute_fps(df, fingerprint="SubFPC", path="descriptor_xml"):
     xml_file = os.path.join(path, f"{fingerprint}.xml")
     if not os.path.exists(xml_file):
         raise FileNotFoundError(f"{xml_file} not found.")
@@ -57,11 +57,11 @@ def predict_from_smiles(smiles_list):
         raise ValueError("❌ No valid organic SMILES after preprocessing.")
     
     # Tính descriptor
-    desc_df = compute_fps(df, fingerprint="KRFPC")
+    desc_df = compute_fps(df, fingerprint="SubFPC")
     X = desc_df.select_dtypes(include=["number"])
 
     # Load model
-    model_path = "models/rf_krfpc_neu.joblib"
+    model_path = "models/rf_subfpc_scar.joblib"
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"❌ Model not found at: {model_path}")
     
